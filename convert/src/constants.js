@@ -4,8 +4,7 @@ const data = {
             width: 1920,
             height: 1080
         },
-        duration: 15,
-        fit: true
+        duration: 15
     },
 
     maximum: {

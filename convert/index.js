@@ -11,8 +11,7 @@ module.exports = async function (context, req) {
         image,
         width = defaults.resolution.width,
         height = defaults.resolution.height,
-        duration = defaults.duration,
-        fit = defaults.fit
+        duration = defaults.duration
     } = (req.body || {});
 
     if (!image) {
@@ -67,7 +66,7 @@ module.exports = async function (context, req) {
 
     context.log('Generating video');
     try {
-        video = await createVideo(imageBuffer, resolution, duration, fit);
+        video = await createVideo(imageBuffer, resolution, duration);
     } catch (err) {
         context.res = {
             status: 500,
