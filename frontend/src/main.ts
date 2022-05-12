@@ -1,8 +1,9 @@
-import './style.css'
+import 'bulma';
+import './scss/main.scss';
 
-const app = document.querySelector<HTMLDivElement>('#app')!
+import createInputEvents from './ts/input-events';
+import previewImage from './ts/preview';
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+const { onPaste } = createInputEvents(previewImage);
+
+document.addEventListener('paste', onPaste);

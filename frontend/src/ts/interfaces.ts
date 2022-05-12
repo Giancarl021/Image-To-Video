@@ -1,0 +1,1 @@
+export type EventCallback = (image: string) => Promise<void>;

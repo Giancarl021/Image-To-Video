@@ -10,5 +10,9 @@
   "devDependencies": {
     "typescript": "^4.5.4",
     "vite": "^2.9.7"
+  },
+  "dependencies": {
+    "bulma": "^0.9.4",
+    "sass": "^1.51.0"
   }
 }
