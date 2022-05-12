@@ -2,6 +2,15 @@ import { EventCallback } from './interfaces';
 const imageRegex = /image/i;
 
 export default function createInputEvents(...callbacks: EventCallback[]) {
+    async function fireCallbacks(image: string) {
+        const promises: Promise<void>[] = [];
+        for (const callback of callbacks) {
+            promises.push(callback(image));
+        }
+
+        await Promise.all(promises);
+    }
+
     async function onPaste(event: ClipboardEvent) {
         const items = (event.clipboardData?.files || []);
 
@@ -39,7 +48,7 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
                     reader.readAsDataURL(image);
                 });
 
-                callbacks.map(cb => cb(imageUrl));
+                await fireCallbacks(imageUrl);
             } catch (error) {
                 console.error(error);
                 continue;
@@ -47,7 +56,29 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
         }
     }
 
+    async function onInput(this: HTMLInputElement) {
+        const [file] = this.files && this.files.length ? Array.from(this.files) : [null]; 
+
+        if (!file) return;
+
+        const $label = this.parentElement?.querySelector('.file-name')! as HTMLSpanElement;
+
+        if (!imageRegex.test(file.type)) {
+            $label.style.color = 'hsl(348, 86%, 43%)';
+            $label.textContent = 'File is not an image';
+
+            this.files = null;
+
+            return;
+        }
+
+        const imageUrl = URL.createObjectURL(file);
+
+        await fireCallbacks(imageUrl);
+    }
+
     return {
-        onPaste
+        onPaste,
+        onInput
     };
 }

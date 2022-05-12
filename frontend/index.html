@@ -6,13 +6,38 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image to Video</title>
-    <script defer type="module" src="/src/main.ts"></script>
+    <script defer type="module" src="/src/index.ts"></script>
 </head>
 
 <body>
-    <div id="previews">
-        The image previews will be here
-    </div>
+    <header>
+        <button id="prev-button" class="button is-warning --disabled">
+            <i class="fas fa-arrow-left" data-feather="arrow-left"></i>
+        </button>
+        <div class="main">
+            <h1>Image to Video</h1>
+            <h2>by <a href="https://github.com/Giancarl021">Giancarl021</a></h2>
+        </div>
+    </header>
+    <section class="section container stage --active" id="uploader">
+        <div class="file has-name is-boxed is-dark is-large">
+            <label class="file-label">
+                <input id="input-file" class="file-input" type="file" name="resume" accept="image/*" />
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload" data-feather="upload"></i>
+                    </span>
+                    <span class="file-label">Open image...</span>
+                </span>
+                <span class="file-name">No file selected</span>
+            </label>
+        </div>
+    </section>
+    <section class="section container stage" id="preview">
+        <div id="image-preview">
+            <img src="" alt="Image Preview" />
+        </div>
+    </section>
 </body>
 
 </html>
