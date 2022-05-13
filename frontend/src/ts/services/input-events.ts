@@ -1,4 +1,4 @@
-import { EventCallback } from './interfaces';
+import { EventCallback } from '../utils/interfaces';
 const imageRegex = /image/i;
 
 export default function createInputEvents(...callbacks: EventCallback[]) {

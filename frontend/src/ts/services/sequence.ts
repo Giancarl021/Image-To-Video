@@ -1,7 +1,15 @@
-export default function () {
+import { SequenceService } from "../utils/interfaces";
+
+interface Callback {
+    index: number;
+    callback: () => void;
+}
+
+export default (function () {
     const $stages = Array.from(document.querySelectorAll('.stage'));
     const $prevButton = document.getElementById('prev-button')!;
     let index = $stages.findIndex($s => $s.classList.contains('--active'));
+    const callbacks: Callback[] = [];
 
     $prevButton.addEventListener('click', prev);
 
@@ -19,12 +27,17 @@ export default function () {
         if (index === 0) return;
 
         $stages[index].classList.remove('--active');
-        
+
         index--;
+
+        if ($stages[index].hasAttribute('data-reset')) {
+            
+        }
 
         $stages[index].classList.add('--active');
 
         checkPrevButton();
+        checkCallbacks();
     }
 
     function goTo(id: string) {
@@ -39,6 +52,20 @@ export default function () {
         $stages[index].classList.add('--active');
 
         checkPrevButton();
+        checkCallbacks();
+    }
+
+    function onIndex(index: number, callback: () => void) {
+        callbacks.push({
+            index,
+            callback
+        });
+    }
+
+    function checkCallbacks() {
+        callbacks
+            .filter(callback => callback.index === index)
+            .forEach(callback => callback.callback());
     }
 
     function checkPrevButton() {
@@ -52,6 +79,7 @@ export default function () {
     return {
         next,
         prev,
-        goTo
+        goTo,
+        onIndex
     };
-}
+}) as SequenceService;
