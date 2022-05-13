@@ -33,9 +33,50 @@
             </label>
         </div>
     </section>
-    <section class="section container stage" id="preview">
+    <section class="stage" id="preview">
         <div id="image-preview">
             <img src="" alt="Image Preview" />
+        </div>
+        <div class="controls">
+            <div class="field">
+                <label class="label">Duration</label>
+                <div class="control">
+                    <input id="control-duration" class="input" type="number" min="1" max="60" value="15" required />
+                </div>
+                <p class="help">Duration in seconds (min 1, max 60)</p>
+            </div>
+            <div class="field">
+                <label class="label">Resolution</label>
+                <div class="control">
+                    <input id="control-width" class="input" type="number" min="480" max="3840" value="1920" required />
+                </div>
+                <div class="control">
+                    <input id="control-height" class="input" type="number" min="360" max="2160" value="1080" required />
+                </div>
+                <p class="help">Width x Height in pixels (min 480x360, max 3840x2160)</p>
+            </div>
+            <div id="resolution-options" class="field is-grouped">
+                <p class="control">
+                    <button class="button is-light">
+                        SD
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button is-dark">
+                        HD
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button is-info">
+                        Full HD
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button is-link">
+                        Match source
+                    </button>
+                </p>
+            </div>
         </div>
     </section>
 </body>

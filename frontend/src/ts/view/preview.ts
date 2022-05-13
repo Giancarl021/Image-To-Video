@@ -1,6 +1,7 @@
+import { PreviewService } from './../interfaces';
 import Sequence from './sequence';
 
-export default function () {
+export default (function () {
     const sequence = Sequence();
     const $container = document.getElementById('image-preview')! as HTMLElement;
 
@@ -16,7 +17,12 @@ export default function () {
         return `<img src="${image}" class="preview-img">`;
     }
 
+    function setPreviewDimension(width: number, height: number) {
+        $container.style.aspectRatio = `${width} / ${height}`;
+    }
+
     return {
-        previewImage
+        previewImage,
+        setPreviewDimension
     };
-}
+}) as PreviewService;
