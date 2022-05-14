@@ -14,7 +14,7 @@ async function main() {
     const preview = Preview(sequence);
     const form = Form(preview, sequence);
 
-    const { onPaste, onInput } = InputEvents(Async(preview.previewImage));
+    const { onPaste, onInput, onDrop } = InputEvents(Async(preview.previewImage));
     
     feather.replace();
 
@@ -25,7 +25,7 @@ async function main() {
     });
 
     document.addEventListener('paste', onPaste);
-    // document.addEventListener('drop', onDrop);
+    document.addEventListener('drop', onDrop);
     $input.addEventListener('change', onInput);
 }
 

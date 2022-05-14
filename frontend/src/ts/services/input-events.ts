@@ -77,8 +77,13 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
         await fireCallbacks(imageUrl);
     }
 
+    async function onDrop(event: DragEvent) {
+        const [file] = (event.dataTransfer?.files || []) as File[];
+    }
+
     return {
         onPaste,
-        onInput
+        onInput,
+        onDrop
     };
 }

@@ -30,10 +30,6 @@ export default (function () {
 
         index--;
 
-        if ($stages[index].hasAttribute('data-reset')) {
-            
-        }
-
         $stages[index].classList.add('--active');
 
         checkPrevButton();
