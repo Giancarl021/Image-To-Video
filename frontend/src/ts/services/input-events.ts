@@ -12,47 +12,35 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
     }
 
     async function onPaste(event: ClipboardEvent) {
-        const items = (event.clipboardData?.files || []);
+        const [item] = (event.clipboardData?.files || []) as File[];
 
-        if (!items.length) return;
+        if (!item || !imageRegex.test(item.type)) return;
 
-        const images = [];
+        const reader = new FileReader();
+        let imageUrl: string;
 
-        for (let i = 0; i < items.length; i++) {
-            const blob = items[i];
+        try {
+            imageUrl = await new Promise<string>((resolve, reject) => {
+                reader.onload = event => {
+                    const result = event.target?.result as string;
+                    if (!result) return reject(new Error('No result from Image Blob'));
 
-            if (!blob || !imageRegex.test(blob.type)) continue;
+                    return resolve(result);
+                };
 
-            images.push(blob);
-        }
+                reader.onerror = event => {
+                    const error = event.target?.error;
+                    if (!error) return reject(new Error('Unknown error from Image Blob'));
 
-        for (const image of images) {
-            const reader = new FileReader();
-            let imageUrl: string;
-            try {
-                imageUrl = await new Promise<string>((resolve, reject) => {
-                    reader.onload = event => {
-                        const result = event.target?.result as string;
-                        if (!result) return reject(new Error('No result from Image Blob'));
+                    return reject(error);
+                }
 
-                        return resolve(result);
-                    };
+                reader.readAsDataURL(item);
+            });
 
-                    reader.onerror = event => {
-                        const error = event.target?.error;
-                        if (!error) return reject(new Error('Unknown error from Image Blob'));
-
-                        return reject(error);
-                    }
-
-                    reader.readAsDataURL(image);
-                });
-
-                await fireCallbacks(imageUrl);
-            } catch (error) {
-                console.error(error);
-                continue;
-            }
+            await fireCallbacks(imageUrl);
+        } catch (error) {
+            console.error(error);
         }
     }
 
