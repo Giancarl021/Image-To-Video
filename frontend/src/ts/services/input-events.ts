@@ -16,32 +16,9 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
 
         if (!item || !imageRegex.test(item.type)) return;
 
-        const reader = new FileReader();
-        let imageUrl: string;
+        const imageUrl = await parseImage(item);
 
-        try {
-            imageUrl = await new Promise<string>((resolve, reject) => {
-                reader.onload = event => {
-                    const result = event.target?.result as string;
-                    if (!result) return reject(new Error('No result from Image Blob'));
-
-                    return resolve(result);
-                };
-
-                reader.onerror = event => {
-                    const error = event.target?.error;
-                    if (!error) return reject(new Error('Unknown error from Image Blob'));
-
-                    return reject(error);
-                }
-
-                reader.readAsDataURL(item);
-            });
-
-            await fireCallbacks(imageUrl);
-        } catch (error) {
-            console.error(error);
-        }
+        await fireCallbacks(imageUrl);
     }
 
     async function onInput(this: HTMLInputElement) {
@@ -66,12 +43,47 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
     }
 
     async function onDrop(event: DragEvent) {
+        preventEvent(event);
         const [file] = (event.dataTransfer?.files || []) as File[];
+
+        if (!file || !imageRegex.test(file.type)) return;
+
+        const imageUrl = await parseImage(file);
+
+        await fireCallbacks(imageUrl);
+    }
+
+    async function preventEvent(event: Event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    async function parseImage(blob: Blob) {
+        const reader = new FileReader();
+
+        return await new Promise<string>((resolve, reject) => {
+            reader.onload = event => {
+                const result = event.target?.result as string;
+                if (!result) return reject(new Error('No result from Image Blob'));
+
+                return resolve(result);
+            };
+
+            reader.onerror = event => {
+                const error = event.target?.error;
+                if (!error) return reject(new Error('Unknown error from Image Blob'));
+
+                return reject(error);
+            }
+
+            reader.readAsDataURL(blob);
+        });
     }
 
     return {
         onPaste,
         onInput,
-        onDrop
+        onDrop,
+        preventEvent
     };
 }

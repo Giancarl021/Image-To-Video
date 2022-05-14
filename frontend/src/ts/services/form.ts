@@ -7,12 +7,14 @@ const formResolutionItems: (keyof FormResolution)[] = [ 'sd', 'hd', 'fhd', 'matc
 export default function (preview: PreviewServiceInstance, sequence: SequenceServiceInstance) {
     const $form = document.querySelector('.controls')! as HTMLDivElement;
     const $resolutionOptions = document.querySelector('#resolution-options')! as HTMLDivElement;
+    const $convertButton = document.querySelector('#convert-button')! as HTMLButtonElement;
 
     const form = loadForm();
     const resolutionOptions = loadResolutionOptions();
     bindResolutionEvents(resolutionOptions);
 
     sequence.onIndex(0, reset);
+    $convertButton.addEventListener('click', sequence.next);
 
     function loadForm() {
         const data = {} as FormInternal;
