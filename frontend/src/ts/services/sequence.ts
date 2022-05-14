@@ -21,6 +21,9 @@ export default (function () {
         index++;
 
         $stages[index].classList.add('--active');
+        
+        checkPrevButton();
+        checkCallbacks();
     }
 
     function prev() {
@@ -65,7 +68,7 @@ export default (function () {
     }
 
     function checkPrevButton() {
-        if (index === 0) {
+        if (index === 0 || $stages[index].hasAttribute('data-no-prev')) {
             $prevButton.classList.add('--disabled');
         } else {
             $prevButton.classList.remove('--disabled');

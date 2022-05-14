@@ -80,9 +80,15 @@
         </div>
         <button id="convert-button" class="button is-fullwidth is-success">Convert</button>
     </section>
-    <section class="section containers stage" id="loading">
+    <section class="section container stage" id="loading" data-no-prev>
         <h1>Converting...</h1>
         <progress class="progress is-large is-success" max="100">Converting...</progress>
+    </section>
+    <section class="section container stage" id="error" data-no-prev>
+        <h1>Error</h1>
+        <p>Something went wrong while converting the image to video.</p>
+        <pre><code id="error-message"></code></pre>
+        <button class="button is-danger">Return to start</button>
     </section>
 </body>
 
