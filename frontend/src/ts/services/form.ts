@@ -1,10 +1,11 @@
-import { FormInternal, FormInternalItem, FormResolution, PreviewServiceInstance, SerializedForm, FormResolutionItem, FormResolutionItemGenerator, Resolution, SequenceServiceInstance } from '../utils/interfaces';
+import { FormInternal, FormInternalItem, FormResolution, PreviewServiceInstance, SerializedForm, FormResolutionItem, FormResolutionItemGenerator, Resolution, SequenceServiceInstance, FormCallback } from '../utils/interfaces';
 import constants from '../utils/constants';
 
 const formItems: (keyof FormInternal)[] = [ 'duration', 'width', 'height' ];
 const formResolutionItems: (keyof FormResolution)[] = [ 'sd', 'hd', 'fhd', 'match' ];
 
 export default function (preview: PreviewServiceInstance, sequence: SequenceServiceInstance) {
+    const callbacks: FormCallback[] = [];
     const $form = document.querySelector('.controls')! as HTMLDivElement;
     const $resolutionOptions = document.querySelector('#resolution-options')! as HTMLDivElement;
     const $convertButton = document.querySelector('#convert-button')! as HTMLButtonElement;
@@ -14,7 +15,10 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
     bindResolutionEvents(resolutionOptions);
 
     sequence.onIndex(0, reset);
-    $convertButton.addEventListener('click', sequence.next);
+    $convertButton.addEventListener('click', async () => {
+        sequence.next();
+        if (callbacks.length) await Promise.all(callbacks.map(cb => cb()));
+    });
 
     function loadForm() {
         const data = {} as FormInternal;
@@ -191,8 +195,13 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
         }
     }
 
+    function addCallback(callback: FormCallback) {
+        callbacks.push(callback);
+    }
+
     return {
         reset,
-        serialize
+        serialize,
+        addCallback
     };
 }

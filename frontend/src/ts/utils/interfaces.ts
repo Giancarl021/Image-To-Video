@@ -17,7 +17,7 @@ export interface FormInternal {
 }
 
 export type FormResolutionItemGenerator = (image: string) => Promise<Resolution>;
-
+export type FormCallback = () => Promise<void>;
 export type FormResolutionItem = {
     name: keyof FormResolution;
     element: HTMLButtonElement;

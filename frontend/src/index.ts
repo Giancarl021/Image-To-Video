@@ -9,6 +9,8 @@ import Form from './ts/services/form';
 
 import Async from './ts/utils/async';
 
+import constants from './ts/utils/constants';
+
 async function main() {
     const sequence = Sequence();
     const preview = Preview(sequence);
@@ -30,6 +32,14 @@ async function main() {
     document.addEventListener('dragover', preventEvent);
     document.addEventListener('drop', onDrop);
     $input.addEventListener('change', onInput);
+
+    form.addCallback(async () => {
+        const response = await fetch(constants.api.url);
+
+        if (response.status < 200 || response.status > 299) {
+
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', main);
