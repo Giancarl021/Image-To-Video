@@ -43,6 +43,17 @@ module.exports = async function (context, req) {
         const [meta, data] = image.substring(5).split(',');
         const [contentType, encoding] = meta.split(';');
 
+        if (!meta || !data || !contentType || !encoding) {
+            context.res = {
+                status: 400,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: error('Invalid "image" body parameter')
+            };
+            return context.done();
+        }
+
         imageBuffer.data = Buffer.from(data, encoding);
         imageBuffer.type = mime.getExtension(contentType);
     }
