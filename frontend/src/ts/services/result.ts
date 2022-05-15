@@ -24,7 +24,6 @@ export default function (sequence: SequenceServiceInstance) {
         if (!$resultVideo.src) return;
 
         $downloadLink.href = $resultVideo.src;
-        // $downloadLink.download = 'result.mp4';
         $downloadLink.click();
     }
 

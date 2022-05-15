@@ -5,6 +5,6 @@ export default {
         duration: 15
     },
     api: {
-        url: 'http://localhost:7071/api/convert'
+        url: 'https://imagetovideo.azurewebsites.net/api/convert'
     }
 };
