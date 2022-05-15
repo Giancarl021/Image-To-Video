@@ -12,6 +12,5 @@
     "ffmpeg-static": "^5.0.0",
     "is-url": "^1.2.4",
     "mime": "^3.0.0"
-  },
-  "devDependencies": {}
+  }
 }
