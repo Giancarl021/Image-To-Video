@@ -37,7 +37,7 @@ export default function createInputEvents(...callbacks: EventCallback[]) {
             return;
         }
 
-        const imageUrl = URL.createObjectURL(file);
+        const imageUrl = await parseImage(file);
 
         await fireCallbacks(imageUrl);
     }

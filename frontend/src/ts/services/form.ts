@@ -180,6 +180,8 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
     function serialize() {
         const data = {} as SerializedForm;
 
+        data.image = preview.getImage();
+
         for (const key in form) {
             const item = form[key as keyof FormInternal];
             data[key as keyof FormInternal] = Number(item.element.value) || item.defaultValue;

@@ -41,6 +41,7 @@ export interface SerializedForm {
     duration: number;
     width: number;
     height: number;
+    image: string;
 }
 
 export type SequenceServiceMethodSimpleNavigation = () => void;
@@ -63,4 +64,8 @@ export interface PreviewServiceInstance {
     previewImage: PreviewServiceMethodPreviewImage;
     setPreviewDimension: PreviewServiceMethodSetPreviewDimension;
     
+}
+
+export interface LooseObject {
+    [key: string]: any;
 }

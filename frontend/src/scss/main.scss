@@ -79,6 +79,26 @@ body {
             margin: 20px;
         }
     }
+
+    section#error {
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin: 15px;
+        }
+        
+        pre {
+            background-color: inherit;
+
+            code {
+                border: 2px solid hsl(0deg, 0%, 85%);
+                max-width: 90vw;
+            }
+        }
+    }
 }
 
 .--active {

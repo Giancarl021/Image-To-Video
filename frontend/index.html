@@ -86,9 +86,18 @@
     </section>
     <section class="section container stage" id="error" data-no-prev>
         <h1>Error</h1>
-        <p>Something went wrong while converting the image to video.</p>
-        <pre><code id="error-message"></code></pre>
+        <p id="error-title">Something went wrong</p>
+        <pre>
+            <code id="error-body">
+
+            </code>
+        </pre>
         <button class="button is-danger">Return to start</button>
+    </section>
+    <section class="section stage" id="result" data-no-prev>
+        <video controls src="" id="result-video"></video>
+        <button class="button is-success" id="download-button">Download</button>
+        <button class="button is-danger" id="reset-button">Return to start</button>
     </section>
 </body>
 
