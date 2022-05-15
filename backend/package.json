@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "func start",
-    "dev": "func host start --cors *",
+    "dev": "func host start --cors \"*\" --javascript",
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {

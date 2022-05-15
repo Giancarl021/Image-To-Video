@@ -45,7 +45,7 @@ export interface SerializedForm {
 }
 
 export type SequenceServiceMethodSimpleNavigation = () => void;
-export type SequenceServiceMethodGoTo = (id: string) => void;
+export type SequenceServiceMethodGoTo = (id: string | number) => void;
 export type SequenceServiceMethodOnIndex = (index: number, callback: () => void) => void;
 export type SequenceService = () => SequenceServiceInstance;
 export interface SequenceServiceInstance {

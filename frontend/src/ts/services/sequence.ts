@@ -39,8 +39,10 @@ export default (function () {
         checkCallbacks();
     }
 
-    function goTo(id: string) {
-        const _index = $stages.findIndex($s => $s.id === id);
+    function goTo(id: string | number) {
+        const _index = typeof id === 'number' ?
+            (id >= 0 && id < $stages.length ? id : -1) :
+            $stages.findIndex($s => $s.id === id);
 
         if (_index === -1) return;
 

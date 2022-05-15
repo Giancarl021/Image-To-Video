@@ -24,7 +24,7 @@ export default function (sequence: SequenceServiceInstance) {
     }
 
     function eventHandler() {
-        sequence.goTo('uploader');
+        sequence.goTo(0);
     }
 
     return {
