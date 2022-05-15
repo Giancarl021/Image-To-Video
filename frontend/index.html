@@ -55,7 +55,7 @@
                 </div>
                 <p class="help">Width x Height in pixels (min 480x360, max 3840x2160)</p>
             </div>
-            <div id="resolution-options" class="field is-grouped">
+            <div id="resolution-options" class="field is-grouped buttons">
                 <p class="control">
                     <button data-resolution="sd" class="button is-light">
                         SD
@@ -77,8 +77,16 @@
                     </button>
                 </p>
             </div>
+            <article class="message is-warning --disabled">
+                <div class="message-header">
+                  <p>Warning</p>
+                </div>
+                <div class="message-body">
+                    Any odd values on resolution will be rounded up because of the encoder limitations.
+                </div>
+              </article>
         </div>
-        <button id="convert-button" class="button is-fullwidth is-success">Convert</button>
+        <button id="convert-button" class="button is-success">Convert</button>
     </section>
     <section class="section container stage" id="loading" data-no-prev>
         <h1>Converting...</h1>

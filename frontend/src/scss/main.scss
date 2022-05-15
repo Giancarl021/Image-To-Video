@@ -65,7 +65,8 @@ body {
             }
         }
 
-        .controls {
+        .controls,
+        > button {
             padding: 20px;
             width: clamp(80px, 80%, calc(100% - 20px));
         }

@@ -9,6 +9,7 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
     const $form = document.querySelector('.controls')! as HTMLDivElement;
     const $resolutionOptions = document.querySelector('#resolution-options')! as HTMLDivElement;
     const $convertButton = document.querySelector('#convert-button')! as HTMLButtonElement;
+    const $oddWarning = document.querySelector('#preview article')! as HTMLDivElement;
 
     const form = loadForm();
     const resolutionOptions = loadResolutionOptions();
@@ -48,7 +49,11 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
                 if (value < item.minimumValue || value > item.maximumValue)
                     item.element.value = item.defaultValue.toString();
 
-                if (updatePreview) firePreviewUpdate();
+                
+                if (updatePreview) {
+                    checkWarning();
+                    firePreviewUpdate();
+                }
             });
         }
     }
@@ -167,6 +172,7 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
         function setFormResolution(resolution: Resolution) {
             form.width.element.value = resolution.width.toString();
             form.height.element.value = resolution.height.toString();
+            checkWarning();
         }
     }
 
@@ -175,6 +181,12 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
             Number(form.width.element.value) || form.width.defaultValue,
             Number(form.height.element.value) || form.height.defaultValue
         );
+    }
+
+    function checkWarning() {
+        if (Number(form.width.element.value) % 2 !== 0 || Number(form.height.element.value) % 2 !== 0) {
+            $oddWarning.classList.remove('--disabled');
+        }
     }
 
     function serialize() {
@@ -191,6 +203,7 @@ export default function (preview: PreviewServiceInstance, sequence: SequenceServ
     }
 
     function reset() {
+        $oddWarning.classList.add('--disabled');
         for (const key in form) {
             const item = form[key as keyof FormInternal];
             item.element.value = item.defaultValue.toString();
