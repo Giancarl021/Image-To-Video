@@ -7,7 +7,7 @@ Simple application with the premise of converting image files into static soundl
 ## [`backend`](backend)
 
 The backend is an NodeJS Azure Function application, meant to be cheap and fast.
-But, after some tests, the libs used are not well optimized for the workload.
+But, after some tests, it's concluded that this architecture is not the best for this type of workload, due to performance issues.
 
 The idea lies on the following:
 * User sends a request to the backend with the image file to be converted together with the target video duration and resolution;
